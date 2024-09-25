@@ -1,26 +1,34 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <UploadCsv @csv-uploaded="handleUpload" />
+    <ListCsv @file-selected="handleFileSelected" />
+    <DisplayCsv v-if="selectedFile" :filename="selectedFile" />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import UploadCsv from './components/UploadCsv.vue';
+import ListCsv from './components/ListCsv.vue';
+import DisplayCsv from './components/DisplayCsv.vue';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    UploadCsv,
+    ListCsv,
+    DisplayCsv,
+  },
+  data() {
+    return {
+      selectedFile: null,
+    };
+  },
+  methods: {
+    handleUpload() {
+      this.$refs.listCsv.fetchCsvFiles();  // Refresh the list after upload
+    },
+    handleFileSelected(file) {
+      this.selectedFile = file;  // Set the selected file to display
+    },
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
