@@ -1,34 +1,58 @@
 <template>
-  <div id="app">
-    <UploadCsv @csv-uploaded="handleUpload" />
-    <ListCsv @file-selected="handleFileSelected" />
-    <DisplayCsv v-if="selectedFile" :filename="selectedFile" />
+  <div id="app" class="flex flex-col min-h-screen bg-gray-50">
+    <header class="bg-white shadow">
+      <div class="max-w-7xl mx-auto px-4 py-6">
+        <h1 class="text-3xl font-bold text-center">No-Code Data Science Tool</h1>
+      </div>
+    </header>
+
+    <nav class="bg-gray-800">
+      <div class="max-w-7xl mx-auto px-4 py-4">
+        <ul class="flex space-x-4">
+          <li>
+            <router-link to="/" class="text-white hover:text-gray-300">Home</router-link>
+          </li>
+          <li>
+            <router-link to="/data-sampler" class="text-white hover:text-gray-300">Data Sampler</router-link>
+          </li>
+          <li>
+            <router-link to="/model-list" class="text-white hover:text-gray-300">Model List</router-link>
+          </li>
+          <li>
+            <router-link to="/model-inference" class="text-white hover:text-gray-300">Model Inference</router-link>
+          </li>
+          <!-- Uncomment the line below if needed -->
+          <!-- <li>
+            <router-link to="/train-model" class="text-white hover:text-gray-300">Train Model</router-link>
+          </li> -->
+        </ul>
+      </div>
+    </nav>
+
+    <main class="flex-grow">
+      <router-view /> <!-- This will render your routed components -->
+    </main>
   </div>
 </template>
 
-<script>
-import UploadCsv from './components/UploadCsv.vue';
-import ListCsv from './components/ListCsv.vue';
-import DisplayCsv from './components/DisplayCsv.vue';
 
+<script>
 export default {
-  components: {
-    UploadCsv,
-    ListCsv,
-    DisplayCsv,
-  },
+  components: {},
   data() {
     return {
       selectedFile: null,
     };
   },
-  methods: {
-    handleUpload() {
-      this.$refs.listCsv.fetchCsvFiles();  // Refresh the list after upload
-    },
-    handleFileSelected(file) {
-      this.selectedFile = file;  // Set the selected file to display
-    },
-  },
 };
 </script>
+
+<style>
+nav {
+  margin-bottom: 20px;
+}
+
+nav a {
+  margin: 0 15px;
+}
+</style>

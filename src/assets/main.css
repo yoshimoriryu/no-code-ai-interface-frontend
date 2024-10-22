@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.table-header {
+  background-color: #e2e8f0; /* bg-gray-200 */
+  color: #4a5568; /* text-gray-600 */
+  text-transform: uppercase; /* uppercase */
+  font-size: 0.875rem; /* text-sm */
+  line-height: 1.5; /* leading-normal */
+}
+
+.table-header-cell {
+  padding: 0.75rem 1.5rem; /* py-3 px-6 */
+  text-align: left; /* text-left */
+}
+
+.modal-content {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+.fixed {
+  position: fixed;
+}
+.inset-0 {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

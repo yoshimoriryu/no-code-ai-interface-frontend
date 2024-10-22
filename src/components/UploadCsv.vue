@@ -1,18 +1,38 @@
 <template>
-  <div>
-    <input type="file" @change="onFileChange" />
-    <button @click="uploadFile">Upload</button>
+  <div class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-xl font-semibold mb-4">Upload CSV File</h2>
+
+    <input
+      type="file"
+      @change="onFileChange"
+      class="mb-4 border border-gray-300 rounded-lg p-2 w-full"
+    />
+    <button
+      @click="uploadFile"
+      class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-lg transition duration-200"
+    >
+      Upload
+    </button>
     
     <!-- Progress Bar -->
-    <div v-if="uploading">
-      <progress :value="uploadProgress" max="100"></progress>
-      <span>{{ uploadProgress }}%</span>
+    <div v-if="uploading" class="mt-4">
+      <progress
+        :value="uploadProgress"
+        max="100"
+        class="w-full h-2 bg-gray-200 rounded-lg"
+      ></progress>
+      <span class="block text-center mt-1 text-gray-700">{{ uploadProgress }}%</span>
     </div>
 
     <!-- Success/Error Message -->
-    <div v-if="message">{{ message }}</div>
+    <div v-if="message" class="mt-4 text-center">
+      <p :class="{'text-green-600': isSuccess, 'text-red-600': !isSuccess}">
+        {{ message }}
+      </p>
+    </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -90,23 +110,3 @@ export default {
   },
 };
 </script>
-
-
-<style scoped>
-progress {
-  width: 100%;
-  height: 20px;
-}
-
-div {
-  margin-top: 10px;
-}
-
-span {
-  margin-left: 10px;
-}
-
-.message {
-  color: green;
-}
-</style>
