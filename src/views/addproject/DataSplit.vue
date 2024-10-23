@@ -73,7 +73,7 @@
 
     <!-- Save and Next Buttons -->
     <div class="flex justify-between">
-      <button class="bg-blue-600 text-white font-semibold py-2 px-6 rounded hover:bg-blue-700">Save</button>
+      <button class="bg-blue-600 text-white font-semibold py-2 px-6 rounded hover:bg-blue-700" @click="uploadAllData">Save</button>
       <button class="bg-blue-600 text-white font-semibold py-2 px-6 rounded hover:bg-blue-700">Next</button>
       <!-- <button
         class="bg-blue-600 text-white font-semibold py-2 px-6 rounded hover:bg-blue-700"
