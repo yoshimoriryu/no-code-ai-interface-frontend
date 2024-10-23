@@ -9,7 +9,27 @@ import BuildModel from '@/views/addproject/BuildModel.vue'
 // import ApiManagement from '../views/ApiManagement.vue'
 // import AnomalyDetection from '../views/AnomalyDetection.vue'
 
+import DataSampler from '@/components/DataSampler.vue'
+// import UploadCsv from '@/components/UploadCsv.vue'
+import ModelList from '@/components/ModelList.vue'
+import HomePage from '@/pages/HomePage.vue'
+
 const routes = [
+  {
+    path: '/upload-csv',
+    name: 'HomePage',
+    component: HomePage
+  },
+  {
+    path: '/data-sampler',
+    name: 'DataSampler',
+    component: DataSampler
+  },
+  {
+    path: '/model-list',
+    name: 'ModelList',
+    component: ModelList
+  },
   {
     path: '/',
     name: 'Dashboard',

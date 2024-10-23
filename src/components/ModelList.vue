@@ -31,7 +31,7 @@
           <tr v-for="model in models" :key="model.id">
             <td class="px-6 py-4">{{ model.name }}</td>
             <td class="px-6 py-4">{{ model.config.filename }}</td>
-            <td class="px-6 py-4">{{ model.algorithm }}</td>
+            <td class="px-6 py-4">{{ model.algorithm.name }}</td>
             <td class="px-6 py-4" v-html="formatHyperparameters(model.hyperparameters)"></td>
             <td class="px-6 py-4">{{ model.model_file }}</td>
             <td class="px-6 py-4">{{ model.accuracy }}</td>
@@ -245,6 +245,7 @@ export default {
         model_file: null,
         status: null,
       },
+      selectedAlgorithm: null,
     };
   },
   created() {
@@ -254,11 +255,13 @@ export default {
   },
   methods: {
     updateAlgorithm() {
-      if (this.newModel.algorithm) {
-        this.newModel.algorithm_id = this.newModel.algorithm.id;
+      const selectedAlgorithm = this.selectedAlgorithm;
+      if (selectedAlgorithm) {
+        this.newModel.algorithm = selectedAlgorithm;
+        this.newModel.algorithm_id = selectedAlgorithm.id;
       } else {
+        this.newModel.algorithm = {};
         this.newModel.algorithm_id = null;
-        this.newModel.algorithm.name = null;
       }
       this.fetchHyperparameters();
     },
