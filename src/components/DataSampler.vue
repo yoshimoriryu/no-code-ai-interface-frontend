@@ -1,8 +1,7 @@
 <template>
   <div class="p-6 bg-gray-100">
-    <h1 class="text-3xl font-bold mb-6">Data Sampler</h1>
     <button
-      class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 transition"
+      class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 transition mb-8"
       @click="openModal"
     >
       Create Data Split Config

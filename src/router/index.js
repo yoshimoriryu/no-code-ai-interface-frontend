@@ -1,56 +1,70 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import DataSampler from '../components/DataSampler.vue'; // Adjust the path to your component
-import HomePage from '../pages/HomePage.vue'; // Example of a home component
-import ModelList from '../components/ModelList.vue';
-import ModelInference from '../components/ModelInference.vue'
-import HomePage2 from '../views/HomePage2.vue';
-// import TrainModel from '../components/TrainModel.vue'; // Import TrainModel component
+import { createRouter, createWebHistory } from 'vue-router'
+import Dashboard from '../views/Dashboard.vue'
+import RetrainModel from '../views/RetrainModel.vue'
+import UploadTrainingData from '@/views/addproject/UploadTrainingData.vue'
+import DataSplit from '@/views/addproject/DataSplit.vue'
+import BuildModel from '@/views/addproject/BuildModel.vue'
+// import BuildModel from '../views/BuildModel.vue'
+// import TestingModel from '../views/TestingModel.vue'
+// import ApiManagement from '../views/ApiManagement.vue'
+// import AnomalyDetection from '../views/AnomalyDetection.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: HomePage,
-    meta: { title: 'Home Page' }
+    name: 'Dashboard',
+    component: Dashboard
   },
   {
-    path: '/home',
-    name: 'Home2',
-    component: HomePage2,
-    meta: { title: 'Home Page 2' }
+    path: '/retrain-model',
+    name: 'RetrainModel',
+    component: RetrainModel
   },
   {
-    path: '/data-sampler',
-    name: 'DataSampler',
-    component: DataSampler,
-    meta: { title: 'Data Sampler' }
+    path: '/upload-training-data',
+    name: 'UploadTrainingData',
+    component: UploadTrainingData
   },
   {
-    path: '/model-list',
-    name: 'ModelList',
-    component: ModelList,
+    path: '/data-split',
+    name: 'DataSplit',
+    component: DataSplit
   },
   {
-    path: '/model-inference',
-    name: 'ModelInference',
-    component: ModelInference,
+    path: '/build-model',
+    name: 'BuildModel',
+    component: BuildModel
   },
   // {
-  //   path: '/train-model', // New route for TrainModel
-  //   name: 'TrainModel',
-  //   component: TrainModel,
+  //   path: '/retrain-model/add',
+  //   name: 'AddProject',
+  //   component: AddProject
   // },
-];
+  // {
+  //   path: '/build-model',
+  //   name: 'BuildModel',
+  //   component: BuildModel
+  // },
+  // {
+  //   path: '/testing-model',
+  //   name: 'TestingModel',
+  //   component: TestingModel
+  // },
+  // {
+  //   path: '/api-management',
+  //   name: 'ApiManagement',
+  //   component: ApiManagement
+  // },
+  // {
+  //   path: '/anomaly-detection',
+  //   name: 'AnomalyDetection',
+  //   component: AnomalyDetection
+  // }
+]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
-});
+  routes
+})
 
-router.beforeEach((to, from, next) => {
-  const title = to.meta.title || 'Default Title'; // Fallback to a default title
-  document.title = title;
-  next();
-});
-
-export default router;
+export default router

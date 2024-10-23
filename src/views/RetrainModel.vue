@@ -1,36 +1,16 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <!-- Header -->
-    <header class="bg-blue-700 text-white p-4 flex justify-between items-center">
-      <div class="flex items-center space-x-4">
-        <div class="text-xl font-bold">Transaction Anomaly Detection System</div>
-      </div>
-      <div class="flex items-center space-x-2">
-        <i class="fas fa-user"></i>
-        <span>User</span>
-      </div>
-    </header>
 
     <div class="flex">
-      <!-- Sidebar -->
-      <aside class="w-64 bg-white shadow-lg h-screen">
-        <nav class="p-4">
-          <ul class="space-y-2">
-            <li class="p-2 hover:bg-gray-100 rounded">Dashboard</li>
-            <li class="p-2 bg-blue-600 text-white rounded">Retrain Model</li>
-            <li class="p-2 hover:bg-gray-100 rounded">Build Model</li>
-            <li class="p-2 hover:bg-gray-100 rounded">Testing Model</li>
-            <li class="p-2 hover:bg-gray-100 rounded">API Model Management</li>
-            <li class="p-2 hover:bg-gray-100 rounded">Anomaly Detection</li>
-          </ul>
-        </nav>
-      </aside>
 
       <!-- Main Content -->
       <main class="flex-1 p-8">
         <div class="flex justify-between items-center mb-6">
           <h1 class="text-2xl font-semibold">Project List</h1>
-          <button class="bg-blue-600 text-white px-4 py-2 rounded flex items-center space-x-2">
+          <button 
+            @click="$router.push('/upload-training-data')" 
+            class="bg-blue-600 text-white px-4 py-2 rounded flex items-center space-x-2"
+          >
             <span>+</span>
             <span>Add Project</span>
           </button>
@@ -66,12 +46,12 @@
             </thead>
             <tbody class="divide-y divide-gray-200">
               <tr v-for="(project, index) in projects" :key="index">
-                <td class="px-6 py-4">{{ project.name }}</td>
-                <td class="px-6 py-4">{{ project.modelId }}</td>
-                <td class="px-6 py-4">{{ project.algorithm }}</td>
-                <td class="px-6 py-4 whitespace-pre">{{ project.hyperparameter }}</td>
+                <td class="px-6 py-4">{{ project.project_name }}</td>
+                <td class="px-6 py-4">{{ project.id }}</td>
+                <td class="px-6 py-4">{{ project.algorithm.name }}</td>
+                <td class="px-6 py-4 whitespace-pre">{{ formatHyperparameters(project.hyperparameters) }}</td>
                 <td class="px-6 py-4">
-                  <template v-if="project.performance.buildProgress">
+                  <!-- <template>
                     <div class="w-full bg-gray-200 rounded">
                       <div
                         class="bg-blue-600 text-xs text-blue-100 text-center p-0.5 leading-none rounded"
@@ -80,14 +60,15 @@
                         {{ project.performance.buildProgress }}%
                       </div>
                     </div>
-                  </template>
-                  <template v-else>
-                    <div class="space-y-1">
-                      <div>Accuracy: {{ project.performance.accuracy }}%</div>
-                      <div>Precision: {{ project.performance.precision }}%</div>
-                      <div>Recall: {{ project.performance.recall }}%</div>
-                    </div>
-                  </template>
+                  </template> -->
+                  <!-- <template> -->
+                  <div class="space-y-1">
+                    <div>Accuracy: {{ (project.accuracy * 100).toFixed(2) }}%</div>
+                    <!-- <div>Precision: {{ (project.performance.precision * 100).toFixed(2) }}%</div>
+                    <div>Recall: {{ (project.performance.recall * 100).toFixed(2) }}%</div> -->
+                    <div>F1 Score: {{ (project.f1_score * 100).toFixed(2) }}%</div>
+                  </div>
+                  <!-- </template> -->
                 </td>
                 <td class="px-6 py-4">
                   <i class="fas fa-download text-blue-600 cursor-pointer"></i>
@@ -98,7 +79,7 @@
                 <td class="px-6 py-4">
                   <i class="fas fa-download text-blue-600 cursor-pointer"></i>
                 </td>
-                <td class="px-6 py-4">{{ project.creationDate }}</td>
+                <td class="px-6 py-4">{{ formatDate(project.created_at) }}</td>
                 <td class="px-6 py-4">
                   <div class="flex space-x-2">
                     <i class="fas fa-edit text-blue-600 cursor-pointer"></i>
@@ -116,11 +97,11 @@
 
 <script>
 export default {
-  name: 'ProjectManagement',
+  name: 'RetrainModel',
   data() {
     return {
       searchQuery: '',
-      projects: [
+      dummyProjects: [
         {
           name: 'Project A',
           modelId: 'Model_1',
@@ -143,8 +124,33 @@ export default {
           },
           creationDate: '01/09/2024'
         }
-      ]
+      ],
+      projects: []
     }
+  },
+  created() {
+    this.fetchModels();
+  },
+  methods: {
+    formatHyperparameters(hyperparameters) {
+      return Object.entries(hyperparameters)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(', ');
+    },
+    formatDate(timestamp) {
+      const date = new Date(timestamp);
+      return date.toLocaleString(); // This will use the user's locale
+    },
+    async fetchModels() {
+      try {
+        const response = await fetch('http://localhost:8000/all-models/');
+        if (!response.ok) throw new Error('Failed to fetch models');
+        this.projects = await response.json();
+        console.log(this.projects[0].accuracy)
+      } catch (error) {
+        console.error('Error fetching models:', error);
+      }
+    },
   }
 }
 </script>
