@@ -5,23 +5,17 @@ module.exports = defineConfig({
 
 module.exports = {
   devServer: {
+    // https: true, // Ensure that Webpack Dev Server runs with HTTPS
+    // client: {
+    //   webSocketURL: 'wss://localhost:8080/ws', // Use secure WebSocket URL
+    // },
+    allowedHosts: 'all',
     proxy: {
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
-        pathRewrite: { '^/api': '' }, // Remove /api prefix when forwarding
+        pathRewrite: { '^/api': '' },
       },
     },
   },
-  // chainWebpack: config => {
-  //   config.module
-  //     .rule('css')
-  //     .test(/\.css$/)
-  //     .use('vue-style-loader')
-  //     .loader('vue-style-loader')
-  //     .end()
-  //     .use('css-loader')
-  //     .loader('css-loader')
-  //     .end()
-  // }
-};
+}

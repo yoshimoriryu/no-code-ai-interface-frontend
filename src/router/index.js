@@ -32,6 +32,11 @@ const routes = [
   },
   {
     path: '/',
+    redirect: '/upload-csv', 
+  },
+  {
+    // path: '/',
+    path: '/Dashboard',
     name: 'Dashboard',
     component: Dashboard
   },
