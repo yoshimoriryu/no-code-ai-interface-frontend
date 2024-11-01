@@ -1,27 +1,24 @@
 const { defineConfig } = require('@vue/cli-service')
-module.exports = defineConfig({
-  transpileDependencies: true
-})
 
-module.exports = {
+module.exports = defineConfig({
+  transpileDependencies: true,
   devServer: {
     proxy: {
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
-        pathRewrite: { '^/api': '' }, // Remove /api prefix when forwarding
+        pathRewrite: { '^/api': '' },
       },
     },
+    https: true,
+    webSocketServer: {
+      type: 'ws'
+    },
+    allowedHosts: 'all',
+    client: {
+      webSocketURL: {
+        protocol: 'wss'  // Use WSS protocol for secure WebSocket
+      }
+    },
   },
-  // chainWebpack: config => {
-  //   config.module
-  //     .rule('css')
-  //     .test(/\.css$/)
-  //     .use('vue-style-loader')
-  //     .loader('vue-style-loader')
-  //     .end()
-  //     .use('css-loader')
-  //     .loader('css-loader')
-  //     .end()
-  // }
-};
+});
